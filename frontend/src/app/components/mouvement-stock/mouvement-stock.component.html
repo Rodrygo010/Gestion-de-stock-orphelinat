@@ -1,0 +1,94 @@
+<div class="container">
+  <h2 class="title">🧾 Gestion des Mouvements de Stock</h2>
+
+  <!-- Formulaire d'ajout -->
+  <form (ngSubmit)="ajouterMouvement()" class="form-section">
+    <div class="form-group">
+      <select [(ngModel)]="nouveauMouvement.produitId" name="produitId" required>
+        <option value="" disabled selected>-- Sélectionner un produit --</option>
+        <option *ngFor="let produit of produits" [value]="produit.id">{{ produit.nom }}</option>
+      </select>
+
+      <select [(ngModel)]="nouveauMouvement.type" name="type" required>
+        <option value="ENTREE">Entrée</option>
+        <option value="SORTIE">Sortie</option>
+      </select>
+
+      <input type="number" placeholder="Quantité" [(ngModel)]="nouveauMouvement.quantite" name="quantite" required>
+      <input type="date" [(ngModel)]="nouveauMouvement.date" name="date" required>
+
+      <button type="submit" class="btn-submit">➕ Ajouter Mouvement</button>
+    </div>
+
+    <div class="navigation-container">
+      <button routerLink="/produits" class="nav-btn">📦 Voir Produits</button>
+    </div>
+  </form>
+
+  <!-- Barre de recherche -->
+  <div class="search-section">
+    <input type="text" [(ngModel)]="filtre" placeholder="🔍 Rechercher un mouvement..." class="search-input">
+  </div>
+
+  <!-- Tableau des mouvements -->
+  <table class="movement-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Produit</th>
+        <th>Type</th>
+        <th>Quantité</th>
+        <th>Unité</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let mv of mouvementsFiltres()">
+        <td>{{ mv.id }}</td>
+        <td>{{ getNomProduit(mv.produitId) }}</td>
+        <td [ngClass]="{'entry-type': mv.type === 'ENTREE', 'exit-type': mv.type === 'SORTIE'}">{{ mv.type }}</td>
+        <td>{{ mv.quantite }}</td>
+        <td>{{ getUniteProduit(mv.produitId) }}</td>
+        <td>{{ mv.date | date: 'yyyy-MM-dd' }}</td>
+        <td>
+          <button (click)="afficherHistorique(getProduitById(mv.produitId))" class="historique-btn">
+            📜 Historique
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Historique des mouvements -->
+  <div *ngIf="historiqueMouvements.length > 0" class="historique-section">
+    <h3>📘 Historique pour : <strong>{{ produitSelectionne?.nom }}</strong></h3>
+
+ 
+
+
+    <div class="export-buttons">
+      <button (click)="exporterHistoriquePDF()" class="export-btn pdf">📄 PDF</button>
+      <button (click)="exporterHistoriqueExcel()" class="export-btn excel">📊 Excel</button>
+    </div>
+
+    <table class="historique-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Quantité</th>
+          <th>Unité</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let mv of historiqueMouvements">
+          <td>{{ mv.date | date:'short' }}</td>
+          <td>{{ mv.type }}</td>
+          <td>{{ mv.quantite }}</td>
+          <td>{{ getUniteProduit(mv.produitId) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

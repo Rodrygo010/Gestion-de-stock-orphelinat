@@ -1,0 +1,69 @@
+<div class="container my-5">
+  <h1 class="text-center mb-4 text-primary">📦 Gestion des Produits</h1>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-primary text-white">
+      <h2 class="h5 mb-0">➕ Ajouter un produit</h2>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="produitEnEdition ? mettreAJourProduit() : ajouterProduit()" class="row g-3">
+        <div class="col-md-6">
+          <input type="text" class="form-control" placeholder="Nom" [(ngModel)]="nouveauProduit.nom" name="nom" required>
+        </div>
+        <div class="col-md-6">
+          <input type="text" class="form-control" placeholder="Catégorie" [(ngModel)]="nouveauProduit.categorie" name="categorie" required>
+        </div>
+        <div class="col-md-6">
+          <input type="number" class="form-control" placeholder="Quantité" [(ngModel)]="nouveauProduit.quantiteTotale" name="quantite" required>
+        </div>
+        <div class="col-md-6">
+          <input type="text" class="form-control" placeholder="Unité" [(ngModel)]="nouveauProduit.unite" name="unite" required>
+        </div>
+        <div class="col-12 text-end">
+          <button type="submit" class="btn btn-success" *ngIf="!produitEnEdition">Ajouter</button>
+          <button type="button" class="btn btn-warning" *ngIf="produitEnEdition" (click)="mettreAJourProduit()">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between mb-4">
+    <button routerLink="/mouvements" class="btn btn-outline-secondary">🔁 Voir mouvements</button>
+    <button routerLink="/stats" class="btn btn-outline-primary">📊 Voir les statistiques</button>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-header bg-dark text-white">
+      <h2 class="h5 mb-0">📋 Liste des Produits</h2>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover m-0">
+          <thead class="table-primary">
+            <tr>
+              <th>🆔 ID</th>
+              <th>📛 Nom</th>
+              <th>📂 Catégorie</th>
+              <th>🔢 Quantité</th>
+              <th>⚖️ Unité</th>
+              <th>⚙️ Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let produit of produits">
+              <td>{{ produit.id }}</td>
+              <td>{{ produit.nom }}</td>
+              <td>{{ produit.categorie }}</td>
+              <td>{{ produit.quantiteTotale }}</td>
+              <td>{{ produit.unite }}</td>
+              <td>
+                <button class="btn btn-sm btn-outline-info me-1" (click)="modifierProduit(produit)">✏️</button>
+                <button class="btn btn-sm btn-outline-danger" (click)="supprimerProduit(produit.id!)">🗑️</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

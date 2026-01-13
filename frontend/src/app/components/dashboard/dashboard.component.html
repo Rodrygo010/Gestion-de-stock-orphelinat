@@ -1,0 +1,38 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">📊 Statistiques du Stock</h2>
+
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card shadow-sm border-primary text-center">
+        <div class="card-body">
+          <h5 class="card-title">📦 Produits</h5>
+          <p class="card-text fs-3 fw-bold text-primary">{{ stats.produits }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm border-success text-center">
+        <div class="card-body">
+          <h5 class="card-title">➕ Entrées</h5>
+          <p class="card-text fs-3 fw-bold text-success">{{ stats.entrees }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm border-danger text-center">
+        <div class="card-body">
+          <h5 class="card-title">➖ Sorties</h5>
+          <p class="card-text fs-3 fw-bold text-danger">{{ stats.sorties }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-5">
+    <canvas baseChart
+      [data]="chartData"
+      [labels]="chartLabels"
+      [type]="'bar'">
+    </canvas>
+  </div>
+</div>

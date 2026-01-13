@@ -1,0 +1,64 @@
+<div class="container">
+  <h2>📦 Ajouter un don</h2>
+
+  <form (ngSubmit)="enregistrer()">
+    <div class="mb-3">
+      <label>Produit</label>
+      <select [(ngModel)]="nouveauDon.produitId" name="produitId" class="form-control" required>
+        <option value="" disabled selected>-- Sélectionnez un produit --</option>
+        <option *ngFor="let produit of produits" [value]="produit.id">
+          {{ produit.nom }} ({{ produit.unite }})
+        </option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label>Quantité</label>
+      <input type="number" [(ngModel)]="nouveauDon.quantite" name="quantite" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label>Don</label>
+      <input type="text" [(ngModel)]="nouveauDon.beneficiaire" name="beneficiaire" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label>Date</label>
+      <input type="date" [(ngModel)]="nouveauDon.date" name="date" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-success">💾 Enregistrer</button>
+  </form>
+
+  <hr>
+
+  <h3>🕓 Historique des dons</h3>
+
+
+  <input [(ngModel)]="nomRecherche" (ngModelChange)="rechercherParNom()" placeholder="Rechercher bénéficiaire" class="form-control">
+
+
+
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Produit</th>
+        <th>Quantité</th>
+        <th>Unité</th>
+        <th>Don</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let d of dons">
+        <td>{{ d.date }}</td>
+        <td>{{ d.nomProduit }}</td>
+        <td>{{ d.quantite }}</td>
+        <td>{{ d.unite }}</td>
+        <td>{{ d.beneficiaire }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
